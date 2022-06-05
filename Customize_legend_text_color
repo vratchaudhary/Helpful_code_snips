@@ -1,3 +1,4 @@
+#Customizes legend text color in ggplot
 library(tidyverse)
 library(ggtext)
 
