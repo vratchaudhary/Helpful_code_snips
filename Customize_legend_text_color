@@ -1,0 +1,20 @@
+library(tidyverse)
+library(ggtext)
+
+a <- as.data.frame(sample(1:5000, 100))
+a$mouse <- "Mickey Mouse"
+b <- as.data.frame(sample(1:5000, 100))
+b$mouse <- "Minnie Mouse"
+ab <- as.data.frame(rbind(a, b))
+colnames(ab) <- c("Score", "mouse")
+
+
+ab |> 
+  mutate(mouse = str_replace(mouse, "(Minni|Mickey)", "<span style='color:blue'>\\1</span>")) |> 
+  mutate(mouse = str_replace(mouse, "(Mouse)", "<span style='color:red'>\\1</span>")) |> 
+  ggplot() +
+  geom_histogram(aes(Score, fill = mouse)) +
+  theme(
+    legend.text = element_markdown()
+  )
+
