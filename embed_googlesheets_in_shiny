@@ -1,0 +1,35 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+library(googlesheets4)
+library(DT)
+
+# ====================== #
+# server.R
+# link your Sheet's URL string here
+googleSheet_embed_link <- "https://docs.google.com/spreadsheets/d/1MB5p_lJ-hGjveS6wdpGH_dmP7ktSPzUZoqDO97_X8K8/edit?usp=sharing"
+server<-shinyServer(function(input, output, session) {
+  output$googleSheet <- renderUI({
+    tags$iframe(id = "googleSheet",
+                src = googleSheet_embed_link,
+                width = 1024,
+                height = 768,
+                frameborder = 0,
+                marginheight = 0)
+  })
+})
+# ====================== #
+# ui.R 
+# simply render your embedded sheet 
+ui <- fluidPage(
+  titlePanel("Embedded Google Sheet"),
+  htmlOutput("googleSheet"))
+
+shinyApp(ui,server)
